@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CarService } from '../shared/car/car.service';
 import { GiphyService } from '../shared/giphy/giphy.service';
 import { NgForm } from '@angular/forms';
+import { OwnerService } from '../shared/services/owner.service';
 
 @Component({
   selector: 'app-car-edit',
@@ -12,13 +13,17 @@ import { NgForm } from '@angular/forms';
 })
 export class CarEditComponent implements OnInit, OnDestroy {
   car: any = {};
-
+  owners: Array<any>;
   sub: Subscription;
+  ownerDni: any;
+  existOwner = false;
+
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private carService: CarService,
-              private giphyService: GiphyService) {
+              private giphyService: GiphyService,
+              private ownerService: OwnerService) {
   }
 
   ngOnInit() {
@@ -32,7 +37,7 @@ export class CarEditComponent implements OnInit, OnDestroy {
             this.giphyService.get(car.name).subscribe(url => car.giphyUrl = url);
           } else {
             console.log(`Car with id '${id}' not found, returning to list`);
-            this.gotoList();
+            this.router.navigate(['/car-list']);
           }
         });
       }
@@ -43,19 +48,33 @@ export class CarEditComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  gotoList() {
-    this.router.navigate(['/car-list']);
+  getDni(event: Event) {
+    this.ownerDni = (event.target as HTMLInputElement).value;
+    console.log(this.ownerDni);
   }
 
   save(form: NgForm) {
-    this.carService.save(form).subscribe(result => {
-      this.gotoList();
-    }, error => console.error(error));
+    this.owners = [];
+    this.ownerService.getAll().subscribe((owner: any) => {
+      this.owners = owner._embedded.owners;
+      for (owner of this.owners) {
+        if (owner.dni == this.ownerDni) {
+          this.existOwner = true;
+        }
+      }
+      if (this.existOwner) {
+        this.carService.save(form).subscribe(result => {
+          this.router.navigate(['/car-list']);
+        });
+      } else {
+        alert('Dueño no encontrado');
+      }
+    });
   }
 
   remove(href) {
     this.carService.remove(href).subscribe(result => {
-      this.gotoList();
+      this.router.navigate(['/car-list']);
     }, error => console.error(error));
   }
 }
