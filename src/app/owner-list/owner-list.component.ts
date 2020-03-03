@@ -13,7 +13,6 @@ export class OwnerListComponent implements OnInit {
   owners: Array<any>;
   owner: any;
   selected: Array<any> = [] ;
-  seleccionado=false;
 
   constructor(private route: ActivatedRoute, private router: Router, private ownerService: OwnerService, private carService: CarService) { }
 
@@ -22,15 +21,9 @@ export class OwnerListComponent implements OnInit {
       this.owners = data._embedded.owners;
     });
   }
-
-
   selectedItem(owner: any) {
-    if(this.seleccionado){
-      this.selected.push(owner);
-      this.router.navigate(['/owner-list']);
-    }else{
-      this.selected=[];
-    }
+    this.selected.push(owner);
+    this.router.navigate(['/owner-list'])
   }
 
   removeOwner() {

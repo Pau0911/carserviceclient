@@ -3,7 +3,7 @@
     <mat-card-content>
       <mat-list> 
         <mat-list-item *ngFor=" let owner of owners">
-            <mat-checkbox (change)="selectedItem(owner)" style="text-align: center; margin-top: 50px;">
+            <mat-checkbox  (change)="selectedItem(owner)" style="text-align: center; margin-top: 50px;">
               <a mat-button [routerLink]="['/owner-edit', owner.dni]" >{{owner.name}}</a></mat-checkbox>
         </mat-list-item>
       </mat-list>
