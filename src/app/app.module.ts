@@ -35,7 +35,7 @@ import { OwnerCarComponent } from './owner-car/owner-car.component';
     MatListModule,
     MatToolbarModule,
     FormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

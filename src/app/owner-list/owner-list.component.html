@@ -1,18 +1,18 @@
-<mat-card>
-    <mat-card-title>Owner List</mat-card-title>
+<mat-card class="mat">
+    <mat-card-title >Owner List</mat-card-title>
     <mat-card-content>
-      <mat-list>
+      <mat-list> 
         <mat-list-item *ngFor=" let owner of owners">
-          <h3 mat-line>
-            <mat-checkbox (change)="selectedItem(owner)">
-              <a mat-button [routerLink]="['/owner-edit', owner.dni]">{{owner.name}}</a></mat-checkbox>
-          </h3>
+            <mat-checkbox (change)="selectedItem(owner)" style="text-align: center; margin-top: 50px;">
+              <a mat-button [routerLink]="['/owner-edit', owner.dni]" >{{owner.name}}</a></mat-checkbox>
         </mat-list-item>
       </mat-list>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" [routerLink]="['/owner-add']">Add New Owner</button>
-      <button mat-raised-button color="secondary" (click)="removeOwner()" type="button">Delete selected items</button>
+      <button mat-raised-button color="accent" [routerLink]="['/owner-add']" style="margin-top: 40px;">Add New Owner</button>
+      <br>
+      <br>
+      <button mat-raised-button color="accent" (click)="removeOwner()" type="button">Delete selected items</button>
     </mat-card-actions>
   </mat-card>
   
