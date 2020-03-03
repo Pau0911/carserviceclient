@@ -50,7 +50,7 @@ export class CarEditComponent implements OnInit, OnDestroy {
 
   getDni(event: Event) {
     this.ownerDni = (event.target as HTMLInputElement).value;
-    console.log(this.ownerDni);
+   
   }
 
   save(form: NgForm) {
@@ -67,7 +67,11 @@ export class CarEditComponent implements OnInit, OnDestroy {
           this.router.navigate(['/car-list']);
         });
       } else {
-        alert('Dueño no encontrado');
+
+        alert('No se ha encontrado o no se ingreso dueño');
+        this.carService.save(form).subscribe(result => {
+          this.router.navigate(['/car-list']);
+        });
       }
     });
   }

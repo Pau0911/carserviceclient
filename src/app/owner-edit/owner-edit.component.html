@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="mat">
     <form #ownerForm="ngForm" (ngSubmit)="saveOwner(ownerForm.value)">
       <mat-card-header>
         <mat-card-title><h2>{{owner.name ? 'Edit' : 'Add'}} Owner</h2></mat-card-title>
@@ -6,15 +6,17 @@
       <mat-card-content>
         <input type="hidden" name="href" [(ngModel)]="owner.href">
         <mat-form-field>
-          <input matInput placeholder="Owner Name" [(ngModel)]="owner.name"
+          <input matInput placeholder="Owner Name" [(ngModel)]="owner.name" type="text"
                  required name="name" #name>
         </mat-form-field>
+        <br>
         <mat-form-field>
-          <input matInput placeholder="Owner Id" [(ngModel)]="owner.dni"
+          <input matInput placeholder="Owner Id" [(ngModel)]="owner.dni" type="number"
                  required name="dni" #dni>
         </mat-form-field>
+        <br>
         <mat-form-field>
-            <input matInput placeholder="Owner Profession" [(ngModel)]="owner.profession"
+            <input matInput placeholder="Owner Profession" [(ngModel)]="owner.profession" type="text"
                    required name="profession" #profession>
         </mat-form-field>
       </mat-card-content>
