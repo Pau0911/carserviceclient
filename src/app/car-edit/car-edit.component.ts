@@ -16,9 +16,9 @@ export class CarEditComponent implements OnInit, OnDestroy {
   owners: Array<any>;
   sub: Subscription;
   ownerDni: any;
+
   existOwner = false;
-
-
+  
   constructor(private route: ActivatedRoute,
               private router: Router,
               private carService: CarService,
@@ -48,11 +48,10 @@ export class CarEditComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  getDni(event: Event) {
-    this.ownerDni = (event.target as HTMLInputElement).value;
-   
+  getDni(ownerr) {
+    console.log(ownerr)
+    this.ownerDni = ownerr;
   }
-
   save(form: NgForm) {
     this.owners = [];
     this.ownerService.getAll().subscribe((owner: any) => {
@@ -67,11 +66,12 @@ export class CarEditComponent implements OnInit, OnDestroy {
           this.router.navigate(['/car-list']);
         });
       } else {
-
         alert('No se ha encontrado o no se ingreso dueño');
-        this.carService.save(form).subscribe(result => {
-          this.router.navigate(['/car-list']);
-        });
+        
+        console.log(form)
+        
+        //this.ngOnDestroy();
+  
       }
     });
   }
