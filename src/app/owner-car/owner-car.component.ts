@@ -11,9 +11,9 @@ import { OwnerService } from '../shared/services/owner.service';
 })
 export class OwnerCarComponent implements OnInit {
 
-  cars: Array<any>;
-  ownerList: Array<any>;
-  owners: Array<any>;
+  cars: any[];
+  ownerList: any[];
+  owners: any[];
   ownerName: any;
 
   constructor(private carService: CarService, private giphyService: GiphyService,
@@ -22,14 +22,16 @@ export class OwnerCarComponent implements OnInit {
   ngOnInit() {
     this.owners = [];
     this.ownerList = [];
+    //Lista de duenos
     this.ownerService.getAll().subscribe((owner: any) => {
       this.owners = owner._embedded.owners;
-      this.carService.getAll().subscribe(data => {
-        this.cars = data;
-        for (const car of this.cars) {
+      //Lista de carros
+      this.carService.getAll().subscribe(carsList => {
+        this.cars = carsList;
+        for (let car of this.cars) {
           this.giphyService.get(car.name).subscribe(url => {
             car.giphyUrl = url;
-            for (const owner of this.owners) {
+            for (let owner of this.owners) {
               if (owner.dni === car.ownerDni) {
                 this.ownerList.push({
                   carName: car.name,
@@ -37,9 +39,7 @@ export class OwnerCarComponent implements OnInit {
                   ownerName: owner.name,
                   giphyUrl: car.giphyUrl
                 });
-
               }
-
             }
           });
         }

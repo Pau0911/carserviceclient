@@ -25,7 +25,6 @@ export class OwnerListComponent implements OnInit {
     this.selected.push(owner);
     this.router.navigate(['/owner-list'])
   }
-
   removeOwner() {
     for (let owner of this.selected) {
       this.ownerService.remove(owner._links.self.href).subscribe(data => {

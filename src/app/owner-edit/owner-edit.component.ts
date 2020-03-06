@@ -12,16 +12,16 @@ import { NgForm } from '@angular/forms';
 })
 export class OwnerEditComponent implements OnInit {
 
-  owners: Array<any>;
   owner: any = {};
+  owners: Array<any>;
   sub: Subscription;
   
-  constructor(private route: ActivatedRoute, private router: Router, private ownerService: OwnerService, private carService: CarService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private ownerService: OwnerService, private _carService: CarService) { }
 
   ngOnInit() {
     this.owners = [];
     this.sub = this.route.params.subscribe(params => {
-      const id = params["id"];
+      let id = params["id"];
       if (id) {
         this.ownerService.getAll().subscribe((owner: any) => {
           this.owners = owner._embedded.owners;
@@ -40,14 +40,15 @@ export class OwnerEditComponent implements OnInit {
   }
 
   remove(href) {
-    for (const owner of this.owners) {
+    for (let owner of this.owners) {
       this.ownerService.remove(href).subscribe(result => {
-        this.router.navigate(['/owner-list']);        const ownerDni = owner.dni;
-        this.carService.getAll().subscribe((cars) => {
-          for (const car of cars) {
+        this.router.navigate(['/owner-list']);        
+        let ownerDni = owner.dni;
+        this._carService.getAll().subscribe((cars) => {
+          for (let car of cars) {
             if (car.ownerDni === ownerDni) {
               car.ownerDni = null;
-              this.carService.save(car).subscribe(() => {
+              this._carService.save(car).subscribe(() => {
               });
             }
           }
